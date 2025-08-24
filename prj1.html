@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milsim Command Center</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Military simulation inventory and character management system">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Milsim Command">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%231a1a1a'/><text x='96' y='110' font-family='monospace' font-size='60' fill='%2300ff00' text-anchor='middle'>MC</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%231a1a1a'/><text x='96' y='110' font-family='monospace' font-size='60' fill='%2300ff00' text-anchor='middle'>MC</text></svg>">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1pbHNpbSBDb21tYW5kIENlbnRlciIsCiAgInNob3J0X25hbWUiOiAiTWlsc2ltIENtZCIsCiAgImRlc2NyaXB0aW9uIjogIk1pbGl0YXJ5IHNpbXVsYXRpb24gaW52ZW50b3J5IGFuZCBjaGFyYWN0ZXIgbWFuYWdlbWVudCBzeXN0ZW0iLAogICJzdGFydF91cmwiOiAiLyIsCiAgImRpc3BsYXkiOiAiZnVsbHNjcmVlbiIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzFhMWExYSIsCiAgInRoZW1lX2NvbG9yIjogIiMxYTFhMWEiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDcyIDcyJz48cmVjdCB3aWR0aD0nNzInIGhlaWdodD0nNzInIGZpbGw9JyUyMzFhMWExYScvPjx0ZXh0IHg9JzM2JyB5PSc0NScgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPScyNCcgZmlsbD0nJTIzMDBmZjAwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5NQzwvdGV4dD48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiNzJ4NzIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA5NiA5Nic+PHJlY3Qgd2lkdGg9Jzk2JyBoZWlnaHQ9Jzk2JyBmaWxsPSclMjMxYTFhMWEnLz48dGV4dCB4PSc0OCcgeT0nNTgnIGZvbnQtZmFtaWx5PSdtb25vc3BhY2UnIGZvbnQtc2l6ZT0nMzAnIGZpbGw9JyUyMzAwZmYwMCcgdGV4dC1hbmNob3I9J21pZGRsZSc+TUM8L3RleHQ+PC9zdmc+IiwKICAgICAgInNpemVzIjogIjk2eDk2IiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTQ0IDE0NCc+PHJlY3Qgd2lkdGg9JzE0NCcgaGVpZ2h0PScxNDQnIGZpbGw9JyUyMzFhMWExYScvPjx0ZXh0IHg9JzcyJyB5PSc4NScgZm9udC1mYW1pbHk9J21vbm9zcGFjZScgZm9udC1zaXplPSc0NScgZmlsbD0nJTIzMDBmZjAwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5NQzwvdGV4dD48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiMTQ0eDE0NCIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDE5MiAxOTInPjxyZWN0IHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyBmaWxsPSclMjMxYTFhMWEnLz48dGV4dCB4PSc5NicgeT0nMTEwJyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzYwJyBmaWxsPSclMjMwMGZmMDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnPk1DPC90ZXh0Pjwvc3ZnPiIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0sCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgNTEyIDUxMic+PHJlY3Qgd2lkdGg9JzUxMicgaGVpZ2h0PSc1MTInIGZpbGw9JyUyMzFhMWExYScvPjx0ZXh0IHg9JzI1NicgeT0nMzAwJyBmb250LWZhbWlseT0nbW9ub3NwYWNlJyBmb250LXNpemU9JzE2MCcgZmlsbD0nJTIzMDBmZjAwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5NQzwvdGV4dD48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiCiAgICB9CiAgXQp9"">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            overflow-x: auto;
+            /* PWA specific styles */
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Mobile-first responsive design improvements */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .status-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .tabs {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+            
+            .tab-btn {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* PWA install prompt styles */
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(0, 255, 0, 0.9);
+            color: #000;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .install-btn {
+            background: #000;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: rgba(0, 255, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 10px;
+        }
+        
+        .status-bar {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #00ff00;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(0, 255, 0, 0.4);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .tab-content {
+            display: none;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #00ff00;
+            min-height: 500px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+        
+        .card h3 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+        
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .btn {
+            background: rgba(0, 255, 0, 0.3);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+        }
+        
+        .btn-danger {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+        }
+        
+        .inventory-item {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #00ff00;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .inventory-item.low-stock {
+            border-color: #ffaa00;
+            background: rgba(255, 170, 0, 0.1);
+        }
+        
+        .inventory-item.out-of-stock {
+            border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.1);
+        }
+        
+        .skill-bar {
+            background: rgba(0, 0, 0, 0.5);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 5px 0;
+            border: 1px solid #00ff00;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00aa00);
+            transition: width 0.3s ease;
+        }
+        
+        .mission-log {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #00ff00;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .log-entry {
+            border-left: 3px solid #00ff00;
+            padding-left: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.05);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 5px;
+            border: 1px solid #00ff00;
+        }
+        
+        .loadout-slot {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px dashed #00ff00;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 5px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .loadout-slot:hover {
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        .loadout-slot.filled {
+            border-style: solid;
+            background: rgba(0, 255, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MILSIM COMMAND CENTER</h1>
+            <div class="status-bar">
+                <span id="playerName">OPERATOR: [CALLSIGN]</span>
+                <span id="currentDate"></span>
+                <span id="missionStatus">STATUS: READY</span>
+            </div>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('character')">CHARACTER</button>
+            <button class="tab-btn" onclick="switchTab('inventory')">INVENTORY</button>
+            <button class="tab-btn" onclick="switchTab('loadout')">LOADOUT</button>
+            <button class="tab-btn" onclick="switchTab('missions')">MISSION LOG</button>
+            <button class="tab-btn" onclick="switchTab('team')">TEAM</button>
+        </div>
+        
+        <!-- Character Tab -->
+        <div id="character" class="tab-content active">
+            <div class="grid">
+                <div class="card">
+                    <h3>OPERATOR PROFILE</h3>
+                    <div class="input-group">
+                        <label>Callsign:</label>
+                        <input type="text" id="callsign" placeholder="Enter callsign" onchange="updateProfile()">
+                    </div>
+                    <div class="input-group">
+                        <label>Rank:</label>
+                        <select id="rank" onchange="updateProfile()">
+                            <option>Private</option>
+                            <option>Corporal</option>
+                            <option>Sergeant</option>
+                            <option>Lieutenant</option>
+                            <option>Captain</option>
+                            <option>Major</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Specialty:</label>
+                        <select id="specialty">
+                            <option>Rifleman</option>
+                            <option>Marksman</option>
+                            <option>Support Gunner</option>
+                            <option>Medic</option>
+                            <option>Engineer</option>
+                            <option>Recon</option>
+                            <option>Commander</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Unit:</label>
+                        <input type="text" id="unit" placeholder="Unit designation">
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>COMBAT SKILLS</h3>
+                    <div class="input-group">
+                        <label>Marksmanship: <span id="marksmanship-val">50</span></label>
+                        <input type="range" id="marksmanship" min="0" max="100" value="50" onchange="updateSkill('marksmanship')">
+                        <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Tactics: <span id="tactics-val">50</span></label>
+                        <input type="range" id="tactics" min="0" max="100" value="50" onchange="updateSkill('tactics')">
+                        <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Medical: <span id="medical-val">50</span></label>
+                        <input type="range" id="medical" min="0" max="100" value="50" onchange="updateSkill('medical')">
+                        <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+                    </div>
+                    <div class="input-group">
+                        <label>Engineering: <span id="engineering-val">50</span></label>
+                        <input type="range" id="engineering" min="0" max="100" value="50" onchange="updateSkill('engineering')">
+                        <div class="skill-bar"><div class="skill-fill" style="width: 50%"></div></div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>MISSION STATISTICS</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div style="font-size: 2em; font-weight: bold;" id="missionsCompleted">0</div>
+                            <div>Missions Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div style="font-size: 2em; font-weight: bold;" id="combatHours">0</div>
+                            <div>Combat Hours</div>
+                        </div>
+                        <div class="stat-item">
+                            <div style="font-size: 2em; font-weight: bold;" id="accuracy">0%</div>
+                            <div>Accuracy Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div style="font-size: 2em; font-weight: bold;" id="teamKills">0</div>
+                            <div>Confirmed Eliminations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Inventory Tab -->
+        <div id="inventory" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>ADD EQUIPMENT</h3>
+                    <div class="input-group">
+                        <label>Item Name:</label>
+                        <input type="text" id="itemName" placeholder="e.g., M4 Carbine, Magazines, BBs">
+                    </div>
+                    <div class="input-group">
+                        <label>Category:</label>
+                        <select id="itemCategory">
+                            <option>Primary Weapon</option>
+                            <option>Secondary Weapon</option>
+                            <option>Ammunition</option>
+                            <option>Gear</option>
+                            <option>Medical</option>
+                            <option>Electronics</option>
+                            <option>Uniform</option>
+                            <option>Accessories</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Quantity:</label>
+                        <input type="number" id="itemQuantity" value="1" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Condition:</label>
+                        <select id="itemCondition">
+                            <option>Excellent</option>
+                            <option>Good</option>
+                            <option>Fair</option>
+                            <option>Poor</option>
+                            <option>Needs Repair</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Notes:</label>
+                        <textarea id="itemNotes" placeholder="Additional notes..."></textarea>
+                    </div>
+                    <button class="btn" onclick="addInventoryItem()">ADD TO INVENTORY</button>
+                </div>
+                
+                <div class="card" style="grid-column: 1/-1;">
+                    <h3>CURRENT INVENTORY</h3>
+                    <div class="input-group">
+                        <label>Filter by Category:</label>
+                        <select id="inventoryFilter" onchange="filterInventory()">
+                            <option value="">All Categories</option>
+                            <option>Primary Weapon</option>
+                            <option>Secondary Weapon</option>
+                            <option>Ammunition</option>
+                            <option>Gear</option>
+                            <option>Medical</option>
+                            <option>Electronics</option>
+                            <option>Uniform</option>
+                            <option>Accessories</option>
+                        </select>
+                    </div>
+                    <div id="inventoryList"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loadout Tab -->
+        <div id="loadout" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>PRIMARY LOADOUT</h3>
+                    <div class="loadout-slot" onclick="selectLoadoutItem('primary')">
+                        <span id="loadout-primary">Click to select Primary Weapon</span>
+                    </div>
+                    <div class="loadout-slot" onclick="selectLoadoutItem('secondary')">
+                        <span id="loadout-secondary">Click to select Secondary Weapon</span>
+                    </div>
+                    <div class="loadout-slot" onclick="selectLoadoutItem('gear1')">
+                        <span id="loadout-gear1">Click to select Gear Slot 1</span>
+                    </div>
+                    <div class="loadout-slot" onclick="selectLoadoutItem('gear2')">
+                        <span id="loadout-gear2">Click to select Gear Slot 2</span>
+                    </div>
+                    <div class="loadout-slot" onclick="selectLoadoutItem('gear3')">
+                        <span id="loadout-gear3">Click to select Gear Slot 3</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>LOADOUT PRESETS</h3>
+                    <div class="input-group">
+                        <label>Preset Name:</label>
+                        <input type="text" id="presetName" placeholder="e.g., CQB, Long Range, Support">
+                    </div>
+                    <button class="btn" onclick="saveLoadoutPreset()">SAVE CURRENT LOADOUT</button>
+                    <div id="loadoutPresets"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Missions Tab -->
+        <div id="missions" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>NEW MISSION LOG</h3>
+                    <div class="input-group">
+                        <label>Mission Name:</label>
+                        <input type="text" id="missionName" placeholder="Operation name">
+                    </div>
+                    <div class="input-group">
+                        <label>Date:</label>
+                        <input type="date" id="missionDate">
+                    </div>
+                    <div class="input-group">
+                        <label>Location:</label>
+                        <input type="text" id="missionLocation" placeholder="Field/venue">
+                    </div>
+                    <div class="input-group">
+                        <label>Duration (hours):</label>
+                        <input type="number" id="missionDuration" min="0" step="0.5">
+                    </div>
+                    <div class="input-group">
+                        <label>Result:</label>
+                        <select id="missionResult">
+                            <option>Victory</option>
+                            <option>Defeat</option>
+                            <option>Draw</option>
+                            <option>Incomplete</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Notes:</label>
+                        <textarea id="missionNotes" placeholder="Mission details, performance notes, etc."></textarea>
+                    </div>
+                    <button class="btn" onclick="addMissionLog()">LOG MISSION</button>
+                </div>
+                
+                <div class="card" style="grid-column: 1/-1;">
+                    <h3>MISSION HISTORY</h3>
+                    <div class="mission-log" id="missionLog"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Tab -->
+        <div id="team" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>ADD TEAM MEMBER</h3>
+                    <div class="input-group">
+                        <label>Callsign:</label>
+                        <input type="text" id="teamMemberCallsign" placeholder="Team member callsign">
+                    </div>
+                    <div class="input-group">
+                        <label>Role:</label>
+                        <select id="teamMemberRole">
+                            <option>Squad Leader</option>
+                            <option>Rifleman</option>
+                            <option>Marksman</option>
+                            <option>Support Gunner</option>
+                            <option>Medic</option>
+                            <option>Engineer</option>
+                            <option>Recon</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Contact:</label>
+                        <input type="text" id="teamMemberContact" placeholder="Discord, phone, etc.">
+                    </div>
+                    <button class="btn" onclick="addTeamMember()">ADD MEMBER</button>
+                </div>
+                
+                <div class="card" style="grid-column: 1/-1;">
+                    <h3>TEAM ROSTER</h3>
+                    <div id="teamRoster"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global data storage
+        let gameData = {
+            profile: {
+                callsign: '',
+                rank: 'Private',
+                specialty: 'Rifleman',
+                unit: ''
+            },
+            skills: {
+                marksmanship: 50,
+                tactics: 50,
+                medical: 50,
+                engineering: 50
+            },
+            stats: {
+                missionsCompleted: 0,
+                combatHours: 0,
+                accuracy: 0,
+                teamKills: 0
+            },
+            inventory: [],
+            loadout: {
+                primary: null,
+                secondary: null,
+                gear1: null,
+                gear2: null,
+                gear3: null
+            },
+            loadoutPresets: [],
+            missionLog: [],
+            team: []
+        };
+        
+        // Load data on startup
+        loadGameData();
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function updateProfile() {
+            gameData.profile.callsign = document.getElementById('callsign').value;
+            gameData.profile.rank = document.getElementById('rank').value;
+            gameData.profile.specialty = document.getElementById('specialty').value;
+            gameData.profile.unit = document.getElementById('unit').value;
+            
+            document.getElementById('playerName').textContent = 
+                `OPERATOR: ${gameData.profile.callsign || '[CALLSIGN]'}`;
+            
+            saveGameData();
+        }
+        
+        function updateSkill(skillName) {
+            const value = document.getElementById(skillName).value;
+            gameData.skills[skillName] = parseInt(value);
+            
+            document.getElementById(skillName + '-val').textContent = value;
+            document.querySelector(`#${skillName} + .skill-bar .skill-fill`).style.width = value + '%';
+            
+            saveGameData();
+        }
+        
+        function addInventoryItem() {
+            const item = {
+                id: Date.now(),
+                name: document.getElementById('itemName').value,
+                category: document.getElementById('itemCategory').value,
+                quantity: parseInt(document.getElementById('itemQuantity').value),
+                condition: document.getElementById('itemCondition').value,
+                notes: document.getElementById('itemNotes').value
+            };
+            
+            if (item.name) {
+                gameData.inventory.push(item);
+                refreshInventoryDisplay();
+                
+                // Clear form
+                document.getElementById('itemName').value = '';
+                document.getElementById('itemQuantity').value = '1';
+                document.getElementById('itemNotes').value = '';
+                
+                saveGameData();
+            }
+        }
+        
+        function refreshInventoryDisplay() {
+            const container = document.getElementById('inventoryList');
+            const filter = document.getElementById('inventoryFilter').value;
+            
+            let filteredInventory = gameData.inventory;
+            if (filter) {
+                filteredInventory = gameData.inventory.filter(item => item.category === filter);
+            }
+            
+            container.innerHTML = filteredInventory.map(item => `
+                <div class="inventory-item ${item.quantity === 0 ? 'out-of-stock' : item.quantity <= 2 ? 'low-stock' : ''}">
+                    <div>
+                        <strong>${item.name}</strong> (${item.category})<br>
+                        <small>Condition: ${item.condition} | Qty: ${item.quantity}</small>
+                        ${item.notes ? `<br><small>Notes: ${item.notes}</small>` : ''}
+                    </div>
+                    <div>
+                        <button class="btn" onclick="editInventoryItem(${item.id})">EDIT</button>
+                        <button class="btn btn-danger" onclick="removeInventoryItem(${item.id})">REMOVE</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add backup controls at the bottom
+            if (gameData.inventory.length > 0) {
+                container.innerHTML += `
+                    <div style="margin-top: 20px; text-align: center; border-top: 1px solid #00ff00; padding-top: 20px;">
+                        <button class="btn" onclick="exportData()" style="margin-right: 10px;">📤 BACKUP DATA</button>
+                        <button class="btn" onclick="importData()">📥 RESTORE DATA</button>
+                    </div>
+                `;
+            }
+        }
+        
+        function filterInventory() {
+            refreshInventoryDisplay();
+        }
+        
+        function removeInventoryItem(id) {
+            gameData.inventory = gameData.inventory.filter(item => item.id !== id);
+            refreshInventoryDisplay();
+            saveGameData();
+        }
+        
+        function editInventoryItem(id) {
+            const item = gameData.inventory.find(item => item.id === id);
+            if (item) {
+                const newQuantity = prompt('Enter new quantity:', item.quantity);
+                if (newQuantity !== null) {
+                    item.quantity = parseInt(newQuantity);
+                    refreshInventoryDisplay();
+                    saveGameData();
+                }
+            }
+        }
+        
+        function selectLoadoutItem(slot) {
+            if (gameData.inventory.length === 0) {
+                alert('No inventory items available. Add some equipment first!');
+                return;
+            }
+            
+            let options = gameData.inventory
+                .filter(item => item.quantity > 0)
+                .map(item => `${item.name} (${item.category})`)
+                .join('\n');
+            
+            let selection = prompt(`Select item for ${slot}:\n\n${options}\n\nEnter item name:`);
+            
+            if (selection) {
+                const item = gameData.inventory.find(i => 
+                    i.name.toLowerCase() === selection.toLowerCase() && i.quantity > 0
+                );
+                
+                if (item) {
+                    gameData.loadout[slot] = item.name;
+                    document.getElementById(`loadout-${slot}`).textContent = item.name;
+                    document.getElementById(`loadout-${slot}`).parentElement.classList.add('filled');
+                    saveGameData();
+                } else {
+                    alert('Item not found or out of stock!');
+                }
+            }
+        }
+        
+        function saveLoadoutPreset() {
+            const name = document.getElementById('presetName').value;
+            if (!name) return;
+            
+            const preset = {
+                id: Date.now(),
+                name: name,
+                loadout: {...gameData.loadout}
+            };
+            
+            gameData.loadoutPresets.push(preset);
+            refreshLoadoutPresets();
+            document.getElementById('presetName').value = '';
+            saveGameData();
+        }
+        
+        function refreshLoadoutPresets() {
+            const container = document.getElementById('loadoutPresets');
+            container.innerHTML = gameData.loadoutPresets.map(preset => `
+                <div class="inventory-item">
+                    <div><strong>${preset.name}</strong></div>
+                    <div>
+                        <button class="btn" onclick="loadPreset(${preset.id})">LOAD</button>
+                        <button class="btn btn-danger" onclick="removePreset(${preset.id})">DELETE</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function loadPreset(id) {
+            const preset = gameData.loadoutPresets.find(p => p.id === id);
+            if (preset) {
+                gameData.loadout = {...preset.loadout};
+                
+                // Update UI
+                Object.keys(gameData.loadout).forEach(slot => {
+                    const item = gameData.loadout[slot];
+                    const element = document.getElementById(`loadout-${slot}`);
+                    if (item) {
+                        element.textContent = item;
+                        element.parentElement.classList.add('filled');
+                    } else {
+                        element.textContent = `Click to select ${slot.charAt(0).toUpperCase() + slot.slice(1)}`;
+                        element.parentElement.classList.remove('filled');
+                    }
+                });
+                
+                saveGameData();
+            }
+        }
+        
+        function removePreset(id) {
+            gameData.loadoutPresets = gameData.loadoutPresets.filter(p => p.id !== id);
+            refreshLoadoutPresets();
+            saveGameData();
+        }
+        
+        function addMissionLog() {
+            const mission = {
+                id: Date.now(),
+                name: document.getElementById('missionName').value,
+                date: document.getElementById('missionDate').value,
+                location: document.getElementById('missionLocation').value,
+                duration: parseFloat(document.getElementById('missionDuration').value),
+                result: document.getElementById('missionResult').value,
+                notes: document.getElementById('missionNotes').value
+            };
+            
+            if (mission.name && mission.date) {
+                gameData.missionLog.unshift(mission);
+                gameData.stats.missionsCompleted++;
+                gameData.stats.combatHours += mission.duration || 0;
+                
+                refreshMissionLog();
+                updateStats();
+                
+                // Clear form
+                document.getElementById('missionName').value = '';
+                document.getElementById('missionDate').value = '';
+                document.getElementById('missionLocation').value = '';
+                document.getElementById('missionDuration').value = '';
+                document.getElementById('missionNotes').value = '';
+                
+                saveGameData();
+            }
+        }
+        
+        function refreshMissionLog() {
+            const container = document.getElementById('missionLog');
+            container.innerHTML = gameData.missionLog.map(mission => `
+                <div class="log-entry">
+                    <strong>${mission.name}</strong> - ${mission.date}<br>
+                    <small>Location: ${mission.location} | Duration: ${mission.duration}h | Result: ${mission.result}</small>
+                    ${mission.notes ? `<br><em>${mission.notes}</em>` : ''}
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-danger" onclick="removeMissionLog(${mission.id})">DELETE</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function removeMissionLog(id) {
+            const mission = gameData.missionLog.find(m => m.id === id);
+            if (mission) {
+                gameData.stats.missionsCompleted--;
+                gameData.stats.combatHours -= mission.duration || 0;
+                gameData.missionLog = gameData.missionLog.filter(m => m.id !== id);
+                refreshMissionLog();
+                updateStats();
+                saveGameData();
+            }
+        }
+        
+        function addTeamMember() {
+            const member = {
+                id: Date.now(),
+                callsign: document.getElementById('teamMemberCallsign').value,
+                role: document.getElementById('teamMemberRole').value,
+                contact: document.getElementById('teamMemberContact').value
+            };
+            
+            if (member.callsign) {
+                gameData.team.push(member);
+                refreshTeamRoster();
+                
+                // Clear form
+                document.getElementById('teamMemberCallsign').value = '';
+                document.getElementById('teamMemberContact').value = '';
+                
+                saveGameData();
+            }
+        }
+        
+        function refreshTeamRoster() {
+            const container = document.getElementById('teamRoster');
+            container.innerHTML = gameData.team.map(member => `
+                <div class="inventory-item">
+                    <div>
+                        <strong>${member.callsign}</strong> - ${member.role}<br>
+                        <small>Contact: ${member.contact}</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="removeTeamMember(${member.id})">REMOVE</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function removeTeamMember(id) {
+            gameData.team = gameData.team.filter(member => member.id !== id);
+            refreshTeamRoster();
+            saveGameData();
+        }
+        
+        function updateStats() {
+            document.getElementById('missionsCompleted').textContent = gameData.stats.missionsCompleted;
+            document.getElementById('combatHours').textContent = gameData.stats.combatHours.toFixed(1);
+            document.getElementById('accuracy').textContent = gameData.stats.accuracy + '%';
+            document.getElementById('teamKills').textContent = gameData.stats.teamKills;
+        }
+        
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('currentDate').textContent = 
+                now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        }
+        
+        function saveGameData() {
+            // Store data in localStorage for PWA persistence
+            try {
+                localStorage.setItem('milsimGameData', JSON.stringify(gameData));
+                console.log('Game data saved to localStorage');
+            } catch (e) {
+                console.log('LocalStorage not available, using memory storage');
+            }
+        }
+        
+        function loadGameData() {
+            // Load saved data from localStorage if available
+            try {
+                const savedData = localStorage.getItem('milsimGameData');
+                if (savedData) {
+                    gameData = { ...gameData, ...JSON.parse(savedData) };
+                    console.log('Game data loaded from localStorage');
+                }
+            } catch (e) {
+                console.log('Could not load from localStorage, using default data');
+            }
+            
+            refreshInventoryDisplay();
+            refreshLoadoutPresets();
+            refreshMissionLog();
+            refreshTeamRoster();
+            updateStats();
+            
+            // Initialize form values
+            document.getElementById('callsign').value = gameData.profile.callsign;
+            document.getElementById('rank').value = gameData.profile.rank;
+            document.getElementById('specialty').value = gameData.profile.specialty;
+            document.getElementById('unit').value = gameData.profile.unit;
+            
+            // Initialize skill sliders
+            Object.keys(gameData.skills).forEach(skill => {
+                const slider = document.getElementById(skill);
+                if (slider) {
+                    slider.value = gameData.skills[skill];
+                    updateSkill(skill);
+                }
+            });
+            
+            // Set today's date as default for mission logging
+            document.getElementById('missionDate').value = new Date().toISOString().split('T')[0];
+        }
+        
+        // Quick stats update functions for easy access
+        function addKill() {
+            gameData.stats.teamKills++;
+            updateStats();
+            saveGameData();
+        }
+        
+        function updateAccuracy() {
+            const newAccuracy = prompt('Enter accuracy percentage (0-100):', gameData.stats.accuracy);
+            if (newAccuracy !== null && !isNaN(newAccuracy)) {
+                gameData.stats.accuracy = Math.max(0, Math.min(100, parseInt(newAccuracy)));
+                updateStats();
+                saveGameData();
+            }
+        }
+        
+        // Add some keyboard shortcuts for quick access
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '1':
+                        e.preventDefault();
+                        switchTab('character');
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        switchTab('inventory');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        switchTab('loadout');
+                        break;
+                    case '4':
+                        e.preventDefault();
+                        switchTab('missions');
+                        break;
+                    case '5':
+                        e.preventDefault();
+                        switchTab('team');
+                        break;
+                }
+            }
+        });
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGameData();
+            initializePWA();
+        });
+        
+        // PWA functionality
+        let deferredPrompt;
+        
+        function initializePWA() {
+            // Check if app is already installed
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+                console.log('PWA is running in standalone mode');
+                document.body.classList.add('pwa-installed');
+                return;
+            }
+            
+            // Listen for the beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                showInstallPrompt();
+            });
+            
+            // Handle successful installation
+            window.addEventListener('appinstalled', (evt) => {
+                console.log('PWA was installed');
+                hideInstallPrompt();
+            });
+        }
+        
+        function showInstallPrompt() {
+            const promptHtml = `
+                <div class="install-prompt" id="installPrompt">
+                    <strong>📱 Install Milsim Command Center</strong><br>
+                    Add this app to your home screen for quick access!<br>
+                    <button class="install-btn" onclick="installPWA()">INSTALL APP</button>
+                    <button class="install-btn" onclick="hideInstallPrompt()">MAYBE LATER</button>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', promptHtml);
+            
+            // Show prompt after a short delay
+            setTimeout(() => {
+                const prompt = document.getElementById('installPrompt');
+                if (prompt) prompt.style.display = 'block';
+            }, 2000);
+        }
+        
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((result) => {
+                    if (result.outcome === 'accepted') {
+                        console.log('User accepted the PWA install prompt');
+                    } else {
+                        console.log('User dismissed the PWA install prompt');
+                    }
+                    deferredPrompt = null;
+                    hideInstallPrompt();
+                });
+            }
+        }
+        
+        function hideInstallPrompt() {
+            const prompt = document.getElementById('installPrompt');
+            if (prompt) {
+                prompt.style.display = 'none';
+                prompt.remove();
+            }
+        }
+        
+        // Service Worker registration for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    const CACHE_NAME = 'milsim-cache-v1';
+                    const urlsToCache = ['/'];
+                    
+                    self.addEventListener('install', (event) => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then((cache) => cache.addAll(urlsToCache))
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', (event) => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then((response) => {
+                                    return response || fetch(event.request);
+                                })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl)
+                    .then((registration) => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch((error) => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
+        
+        // Add export/import functionality for data backup
+        function exportData() {
+            const dataStr = JSON.stringify(gameData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `milsim-backup-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            if (confirm('This will replace all current data. Are you sure?')) {
+                                gameData = importedData;
+                                saveGameData();
+                                loadGameData();
+                                alert('Data imported successfully!');
+                            }
+                        } catch (error) {
+                            alert('Error importing data: Invalid file format');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+    </script>
+</body>
+</html>
